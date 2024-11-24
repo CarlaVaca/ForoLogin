@@ -1,24 +1,69 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <!-- Menú de navegación -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">Desarrollo de aplicaciones web</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="login.php">Login</a></li>
+        <li><a href="registro.php">Registro</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <head>
+  <!-- Carrusel de imágenes -->
+<div class="carousel-container">
+  <div class="carousel">
+    <img src="img/1.jpg" alt="Imagen 1">
+    <img src="img/2.jpg" alt="Imagen 2">
+    <img src="img/3.jpg" alt="Imagen 3">
+  </div>
+</div>
+   <!-- Cuerpo -->
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inmobiliaria Loja</title>
-        <link rel="stylesheet" href="styles.css">
+    <!-- Pie de página -->
+  <footer id="contact">
+    <div class="footer-container">
+      <p>Dirección: Calle Principal #123, Ciudad, País</p>
+      <p>Email: contacto@ejemplo.com | Teléfono: +123 456 7890</p>
+      <p>&copy; 2024 Mi Aplicación. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-    <head>
+  <script>
+  // Carrusel automático con transiciones fluidas
+  $(document).ready(function () {
+    let currentIndex = 0;
+    const images = $('.carousel img');
+    const imageCount = images.length;
 
-    <body>
+    // Configuración inicial
+    images.hide(); // Ocultar todas las imágenes
+    images.eq(currentIndex).show(); // Mostrar la primera imagen
 
-        <h1>Inmobiliaria Loja</h1>
-        <a href="add_properties.php">Agregar Propiedades</a>
-        <h2>Propiedades Disponibles</h2>
-        <?php include 'view_properties.php'; ?>
+    function showNextImage() {
+      // Ocultar la imagen actual con una transición suave
+      images.eq(currentIndex).fadeOut(500, function () {
+        // Mover al siguiente índice
+        currentIndex = (currentIndex + 1) % imageCount;
 
+        // Mostrar la nueva imagen con una transición suave
+        images.eq(currentIndex).fadeIn(500);
+      });
+    }
 
-    </body>
-
-
+    setInterval(showNextImage, 3000); // Cambiar imagen cada 3 segundos
+  });
+</script>
+</body>
 </html>
+
