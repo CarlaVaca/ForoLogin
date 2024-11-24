@@ -2,32 +2,42 @@
 // Incluir el archivo de conexión
 include('db_connection.php');
 
+// Inicializar una variable para los mensajes de error
+$error_message = "";
+
 // Comprobar si el formulario ha sido enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Obtener los datos del formulario
-    $nombre = mysqli_real_escape_string($mysqli, $_POST['nombre']);
-    $email = mysqli_real_escape_string($mysqli, $_POST['email']);
-    $contrasena = $_POST['contrasena'];
-    $confirm_contrasena = $_POST['confirm_contrasena'];
+    // Validar y obtener los datos del formulario
+    $nombre = mysqli_real_escape_string($mysqli, trim($_POST['nombre']));
+    $email = mysqli_real_escape_string($mysqli, trim($_POST['email']));
+    $contrasena = trim($_POST['contrasena']);
+    $confirm_contrasena = trim($_POST['confirm_contrasena']);
 
-    // Verificar que las contraseñas coincidan
-    if ($contrasena !== $confirm_contrasena) {
+    // Verificar que los campos no estén vacíos
+    if (empty($nombre) || empty($email) || empty($contrasena) || empty($confirm_contrasena)) {
+        $error_message = "Por favor, complete todos los campos.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message = "El correo electrónico no es válido.";
+    } elseif ($contrasena !== $confirm_contrasena) {
         $error_message = "Las contraseñas no coinciden.";
     } else {
         // Verificar si el correo electrónico ya está registrado
-        $query = "SELECT * FROM login WHERE email = '$email'";
-        $result = $mysqli->query($query);
+        $query = "SELECT * FROM login WHERE email = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             $error_message = "El correo electrónico ya está registrado.";
         } else {
-            // Encriptar la contraseña antes de guardarla
-            $encrip_contrasena = contrasena_encrip($contrasena, PASSWORD_DEFAULT);
-
+            // Guardar la contraseña tal como está sin encriptarla
             // Insertar el nuevo usuario en la base de datos
-            $insert_query = "INSERT INTO login (nombre, email, contrasena) VALUES ('$nombre', '$email', '$encrip_contrasena')";
+            $insert_query = "INSERT INTO login (nombre, email, contrasena) VALUES (?, ?, ?)";
+            $stmt = $mysqli->prepare($insert_query);
+            $stmt->bind_param("sss", $nombre, $email, $contrasena);
 
-            if ($mysqli->query($insert_query) === TRUE) {
+            if ($stmt->execute()) {
                 // Redirigir a la página de login si el registro es exitoso
                 header("Location: login.php");
                 exit;
@@ -35,9 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $error_message = "Error al registrar el usuario: " . $mysqli->error;
             }
         }
+        $stmt->close();
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,8 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="logo">Desarrollo de aplicaciones web</div>
         <ul class="nav-links">
             <li><a href="index.html">Inicio</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="registro.html">Registro</a></li>
+            <li><a href="login.php">Login</a></li>
+            <li><a href="registro.php">Registro</a></li>
         </ul>
     </nav>
 </header>

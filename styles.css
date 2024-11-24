@@ -261,3 +261,129 @@ body_l {
 .register-link a:hover {
   text-decoration: underline;
 }
+
+/* Contenedor para la galería */
+body_g {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Estilo de la tabla */
+.gallery-table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.gallery-table th, .gallery-table td {
+    padding: 10px;
+}
+
+.gallery-table th {
+    background-color: #ff00ff; /* Fucsia */
+    font-weight: bold;
+    color: white;
+}
+
+.gallery-table td {
+    background-color: #fff;
+}
+
+.gallery-image {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+/* Estilos generales de la página */
+body.session {
+    font-family: 'Arial', sans-serif;
+    background-color: #e9f7fa; /* Fondo suave para dar sensación relajante */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Para centrar la página en la ventana */
+}
+
+/* Contenedor principal */
+.container.session {
+    background-color: #ffffff; /* Fondo blanco para resaltar el contenido */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 40px;
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+}
+
+/* Estilo del encabezado */
+header.session {
+    background-color: #4caf50; /* Color verde para un toque de frescura */
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+header.session h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+header.session p {
+    font-size: 1.2em;
+}
+
+/* Mensaje de redirección */
+.message.session {
+    background-color: #fff3e0; /* Fondo suave de color durazno */
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 1.4em;
+    color: #4e342e; /* Color oscuro para contraste */
+    font-weight: bold;
+}
+
+/* Estilo del contador */
+#countdown.session {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ff5722; /* Color naranja fuerte para llamar la atención */
+}
+
+/* Animación de contador */
+@keyframes countdownAnimation {
+    0% {
+        color: #ff5722;
+        transform: scale(1);
+    }
+    50% {
+        color: #e91e63; /* Cambiar color a rosa */
+        transform: scale(1.2);
+    }
+    100% {
+        color: #4caf50; /* Color verde cuando se llegue a 0 */
+        transform: scale(1);
+    }
+}
+
+/* Aplicar animación al contador */
+#countdown.session {
+    animation: countdownAnimation 3s ease-in-out;
+}
