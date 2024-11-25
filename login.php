@@ -61,12 +61,6 @@ if (!empty($error_message)) {
     echo "<p style='color: red;'>$error_message</p>";
 }
 ?>
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

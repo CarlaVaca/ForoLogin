@@ -1,5 +1,6 @@
- <?php
-$mysqli = new mysqli("localhost","root","","forologin");
+<?php
+$mysqli = new //mysqli("fdb1028.awardspace.net","4555447_forologin","Russell09*","4555447_forologin");
+mysqli("localhost","root","","forologin");
 
 // Check connection
 if ($mysqli -> connect_errno) {
